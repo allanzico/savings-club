@@ -52,78 +52,22 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
           <li class="breadcrumb-item">
             <a href="index.php">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">My Profile</li>
+          <li class="breadcrumb-item active">Overview</li>
         </ol>
-        <h1> My Profile </h1>
-        <hr />
+
         <!-- Icon Cards-->
-<div class="row">
-<div class="col-md-6">
-
-</div>
-
-
-</div>
-
         <div class="row">
-        <div class="col-xl-2 col-sm-4 mb-2" style="width: 12rem;"> 
-        <div class="card" >
-  <img class="card-img-top" src="https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg" alt="Card image cap">
- 
-</div>
-        </div>
-        <div class="col-xl-4 col-sm-4 mb-4"> 
-        <div class="card">
-
-        <?php 
-                  
-                 
-                  $id = $_SESSION['userID'];
-                  $sql = "SELECT * FROM users WHERE userId =$id;";
-                  $result = mysqli_query($conn,$sql);
-                  $resultCheck = mysqli_num_rows($result); 
- 
-                  
- 
-                  if ($resultCheck>0) {
-                    while ($row = mysqli_fetch_assoc($result)) { 
- 
-                     
-                      $firstName = $row['firstName'];
-                      $lastName = $row['lastName'];
-                      $email = $row['email'];
-                       ?>
-                     
-                    
-                     
-  <div class="card-header">
-  <span class="profile-title" style="color:#09F"> <?php echo $firstName." ".$lastName ?></span>
-  </div>
-  <ul class="list-group list-group-flush">
- 
-    <li class="list-group-item">Email:<span style="color:#09F"> <?php echo $email ?></span> </li>
-    <li class="list-group-item">Mobile: </li>
-    <li class="list-group-item">Gender: </li>
-  </ul>
-</div>
-<?php   }
-                  }
-                  
-                  ?>  
-                
-        
-        </div>
           <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-primary o-hidden h-100">
               <div class="card-body">
-              <h5 class="card-title">My Total savings</h5>
+              <h5 class="card-title">Total savings</h5>
                 <div class="card-body-icon">
                   <i class="fas fa-fw fa-hand-holding-usd"></i>
                 </div>
                 <h4 class="card-text">
                   <?php 
-                  $id = $_SESSION ['userID'];
-                  $sql = "SELECT FORMAT (SUM(amount), 3) AS total_savings FROM transact WHERE userId = $id;";
+                  
+                  $sql = "SELECT FORMAT (SUM(amount), 3) AS total_savings FROM transact;";
                   $result = mysqli_query($conn,$sql);
                   $resultCheck = mysqli_num_rows($result);
  
@@ -135,7 +79,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                       
                       echo "UGX " .$total_savings;
                     }
-                  } 
+                  }
                   
                   ?>
                 </h4>
@@ -144,12 +88,41 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             </div>
           </div>
           <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-warning o-hidden h-100">
-              <div class="card-body">
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body align-items-center d-flex justify-content-center">
                 <div class="card-body-icon">
-                  <i class="fas fa-fw fa-list"></i>
+                  <i class="fas fa-fw fa-users"></i>
                 </div>
-                <div class="mr-5">11 New Tasks!</div>
+                <div class="mr-5">
+                <?php 
+                  
+                  $sql = "SELECT COUNT(firstName) AS total_members FROM users;";
+                  $result = mysqli_query($conn,$sql);
+                  $resultCheck = mysqli_num_rows($result);
+ 
+                  if ($resultCheck>0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+ 
+                     $total_members = $row['total_members'];
+                     ?>
+                     <span class="index-cards"><?php echo $total_members." Users" ?></span>
+                     <?php   }
+                  }
+                  
+                  ?>
+                
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body align-items-center d-flex justify-content-center">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-shopping-cart"></i>
+                </div>
+                <div class="mr-5">123 New Orders!</div>
               </div>
               <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
@@ -159,8 +132,21 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
               </a>
             </div>
           </div>
-          
-          
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-danger o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fas fa-fw fa-life-ring"></i>
+                </div>
+                <div class="mr-5">13 New Tickets!</div>
+              </div>
+              <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left">View Details</span>
+                <span class="float-right">
+                  <i class="fas fa-angle-right"></i>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -168,7 +154,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            My Savings
+            Data Overview
           
             </div>
           <div class="card-body">
@@ -182,14 +168,14 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                     <th>Date</th>
                     <th>Payment type</th>
                     <th>Description</th>
-                    
+                    <th>Update</th>
                     
                   </tr>
                 </thead>
                
                 <tbody>
                  <?php 
-                 $sql = "SELECT * FROM transact WHERE userId = $id;";
+                 $sql = "SELECT * FROM transact;";
                  $result = mysqli_query($conn,$sql);
                  $resultCheck = mysqli_num_rows($result); ?>
 
@@ -203,29 +189,21 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      $amount = $row['amount'];
                      $date = $row['date'];
                      $type = $row['type'];
-                     $description = $row['notes'];
-                    ?>
+                     $description = $row['notes']; ?>
                      <tr>
                      <td><?php echo $payee ?></td>
                      <td><?php echo $amount ?></td>
                      <td><?php echo $date ?></td>
                      <td><?php echo $type ?></td>
                      <td><?php echo $description ?></td>
+                     <td>
+                       
+                     <a href="update.php?edit=<?php echo $row['transactId']; ?>"><span style=" color: 	#4169E1 ;"><i class="far fa-edit "></span></i></a> |
+                     <a href="delete.php?delete=<?php echo $row['transactId']; ?>"  ><span style=" color: 	#FF0000 ;"><i class="fas fa-trash-alt"></span></i></a>
+                    </td>
                      
                      </tr>
-                     
-                     
-                     <!-- echo "<tr>";
-                     
-                      echo "<td>".$payee."</td>";
-                      echo "<td>".$amount."</td>";
-                      echo "<td>".$date."</td>";
-                      echo "<td>".$type."</td>";
-                      echo "<td>".$description."</td>";
-                      
-                      echo "<td><a href=\"add-savings.php?edit=$row[transactId]\" ><span style=\" color: 	#4169E1 ;\"><i class=\"far fa-edit \"></span></i></a> |
-                            <a href=\"includes/update.php?delete=$row[transactId]\" ><span style=\" color: 	#FF0000 ;\"><i class=\"fas fa-trash-alt\"></span></i></a></td>";
-                     echo "</tr>"; -->
+
                      <?php   }
                 } ?>
                  
@@ -282,7 +260,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   <!-- Demo scripts for this page-->
   <script src="js/demo/datatables-demo.js"></script>
   <script src="js/demo/chart-area-demo.js"></script>
-<!-- 
+
   <script type = "text/javascript">
          
             function getConfirmation() {
@@ -296,7 +274,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                }
             }
          
-      </script>  -->
+      </script> 
 
 </body>
 

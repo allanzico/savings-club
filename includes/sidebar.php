@@ -1,27 +1,44 @@
 
+<?php 
+                  
+                 
+                  $id = $_SESSION['userID'];
+                  $sql = "SELECT * FROM users WHERE userId =$id;";
+                  $result = mysqli_query($conn,$sql);
+                  $resultCheck = mysqli_num_rows($result); 
+                
+                  if ($resultCheck>0) {
+                    while ($row = mysqli_fetch_assoc($result)) { 
+                      $firstName = $row['firstName'];
+                      $lastName = $row['lastName'];
+                      $email = $row['email'];
+                      $admin = $row ['admin'];
+                    
+                    }}
+                                       ?>
+                
+
+
 <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="./index.php">
+        <?php if ($admin == 'N') { ?>
+<a class="nav-link" href="./user.php">
+<i class="fas fa-fw fa-tachometer-alt"></i>
+<span>Dashboard</span>
+</a>
+
+       <?php }else { ?>
+        <a class="nav-link" href="./admin.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
+
+      <?php  }
+          
+         ?>
+        
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <h6 class="dropdown-header">Login Screens:</h6>
-          <a class="dropdown-item" href="login.html">Login</a>
-          <a class="dropdown-item" href="register.html">Register</a>
-          <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-          <div class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Other Pages:</h6>
-          <a class="dropdown-item" href="404.html">404 Page</a>
-          <a class="dropdown-item" href="blank.html">Blank Page</a>
-        </div>
-      </li>
+      <?php if ($admin == 'Y') { ?>
       <li class="nav-item">
         <a class="nav-link" href="charts.html">
           <i class="fas fa-fw fa-chart-area"></i>
@@ -37,7 +54,7 @@
           <i class="fas fa-users"></i>
           <span>My profile</span></a>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="members.php">
           <i class="fas fa-users"></i>
           <span>Members</span></a>
       </li>
@@ -46,4 +63,19 @@
           <i class="fas fa-fw fa-table"></i>
           <span>Tables</span></a>
       </li>
+
+      <?php } else { ?>
+
+        <li class="nav-item">
+        <a class="nav-link" href="profile.php">
+          <i class="fas fa-users"></i>
+          <span>My profile</span></a>
+
+          <li class="nav-item">
+        <a class="nav-link" href="members.php">
+          <i class="fas fa-users"></i>
+          <span>Members</span></a>
+      </li>
+
+    <?php  } ?>
     </ul>

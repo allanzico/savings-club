@@ -29,8 +29,14 @@ if(isset($_POST['login_user'])){
                    session_start();
                    $_SESSION['userID']=$row['userId'];
                    $_SESSION['fName']=$row['firstName'];
-                   header("Location: ../index.php?login=success");
+                   $admin = $row['admin'];
+                   if ($admin == 'N') {
+                    header("Location: ../user.php?login=success");
                     exit();
+                   }else {
+                    header("Location: ../admin.php?login=success");
+                   }
+                  
                }else{
                 header("Location: ../login.php?=wrongpwd");
                 exit();

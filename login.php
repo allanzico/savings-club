@@ -16,7 +16,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css">
     <!-- Custom styles for this template -->
-    <link href="./assets/css/landing-page.css" rel="stylesheet">
+    <link href="css/landing-page.css" rel="stylesheet">
 </head>
 
 <body>

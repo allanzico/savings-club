@@ -31,6 +31,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css">
 
 </head>
 
@@ -167,7 +168,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                     <th>Date</th>
                     <th>Payment type</th>
                     <th>Description</th>
-                    <th>Update</th>
+                  
                     
                   </tr>
                 </thead>
@@ -195,10 +196,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      <td><?php echo $date ?></td>
                      <td><?php echo $type ?></td>
                      <td><?php echo $description ?></td>
-                     <td>
-                     <a href="update.php?edit=<?php echo $row['transactId']; ?>"><span style=" color: 	#4169E1 ;"><i class="far fa-edit "></span></i></a> |
-                     <a href="delete.php?delete=<?php echo $row['transactId']; ?>"  ><span style=" color: 	#FF0000 ;"><i class="fas fa-trash-alt"></span></i></a>
-                    </td>
+                    
                      
                      </tr>
                      

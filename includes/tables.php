@@ -10,9 +10,7 @@ $users = "CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(45) NOT NULL UNIQUE,
     profileImage VARCHAR(100),
     password CHAR(60) NOT NULL,
-    admin ENUM('Y','N') DEFAULT 'N',
-    transactId INT(6) NOT NULL,
-    FOREIGN KEY(transactId) REFERENCES transact (transactId)
+    admin ENUM('Y','N') DEFAULT 'N'
    
 )" ;
 

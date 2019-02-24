@@ -31,6 +31,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css">
 
 </head>
 
