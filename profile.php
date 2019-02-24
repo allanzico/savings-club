@@ -1,7 +1,11 @@
 
 <?php
 session_start();
+define('included',TRUE);
 require 'includes/connection.php';
+if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
+  header("Location: 404.html");
+}
 
 
 ?>
@@ -61,7 +65,7 @@ require 'includes/connection.php';
 </div>
 
         <div class="row">
-        <div class="col-xl-2 col-sm-2 mb-2" style="width: 12rem;"> 
+        <div class="col-xl-2 col-sm-4 mb-2" style="width: 12rem;"> 
         <div class="card" >
   <img class="card-img-top" src="https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg" alt="Card image cap">
  
@@ -255,27 +259,7 @@ require 'includes/connection.php';
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <form action="includes/logout.php" method="post" id="logout-form">
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-danger" type="submit">Logout</button>
-        </div>
-      </div>
-    </div>
-  </form>
- 
- <!-- end logout modal  -->
+  <?php require 'includes/logout-modal.php' ?>
 
   </div>
 

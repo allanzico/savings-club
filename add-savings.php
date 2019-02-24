@@ -1,6 +1,12 @@
 
 <?php
+
 session_start();
+define('included',TRUE);
+if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
+  header("Location: 404.html");
+}
+
 
 ?>
 
@@ -15,7 +21,7 @@ session_start();
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin - Dashboard</title>
+  <title>add-savings</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -167,7 +173,7 @@ session_start();
 
     </div>
     <!-- /.content-wrapper -->
-
+    <?php require 'includes/logout-modal.php' ?>
   </div>
   <!-- /#wrapper -->
 

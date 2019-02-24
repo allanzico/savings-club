@@ -1,5 +1,6 @@
 
 <?php
+define('included',TRUE);
 require 'includes/connection.php';
 $id=$_GET['edit'];
 $sql = "SELECT * FROM transact where id=$id;"; 

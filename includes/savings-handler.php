@@ -1,5 +1,5 @@
 <?php 
-
+define('included',TRUE);
 if(isset($_POST['saveTransaction'])){
     require 'connection.php';
 

@@ -1,5 +1,6 @@
 
-  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+ <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
 <a class="navbar-brand mr-1" href="/index.php">Capital Link</a>
 
@@ -29,3 +30,4 @@
 </ul>
 
 </nav>
+

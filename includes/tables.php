@@ -1,4 +1,5 @@
 <?php 
+define('included',TRUE);
 include "connection.php";
 
 //Users table
@@ -13,7 +14,7 @@ $users = "CREATE TABLE IF NOT EXISTS users(
     transactId INT(6) NOT NULL,
     FOREIGN KEY(transactId) REFERENCES transact (transactId)
    
-)" 
+)" ;
 
 //Transaction
 $Transaction = "CREATE TABLE IF NOT EXISTS transact(

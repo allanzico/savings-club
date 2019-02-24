@@ -1,4 +1,10 @@
 <?php
+
+if(!defined('included')){
+        header("Location: ./404.html");
+        
+        exit();
+     }
 //Create connection to mysql server
 $conn = mysqli_connect("localhost", "root", "")
         OR DIE("<p>Unable to connect to the database server.</p>");

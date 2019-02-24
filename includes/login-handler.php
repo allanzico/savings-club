@@ -1,4 +1,5 @@
 <?php
+define('included',TRUE);
 if(isset($_POST['login_user'])){
     require 'connection.php';
 

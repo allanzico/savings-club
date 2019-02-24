@@ -1,5 +1,5 @@
 <?php
-
+define('included',TRUE);
 require 'includes/connection.php';
   if (isset($_GET['delete'])) {
    
