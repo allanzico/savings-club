@@ -1,11 +1,13 @@
 
 <?php
+
 session_start();
 define('included',TRUE);
-ob_start();
 if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   header("Location: 404.html");
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +21,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>update</title>
+  <title>add-savings</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,12 +52,22 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
           <li class="breadcrumb-item">
             <a href="index.php">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">update deposit</li>
+          <li class="breadcrumb-item active">add new member</li>
         </ol>
+
+        </ol>
+
         <?php
         if (isset($_GET['error'])) {
             if ($_GET['error'] == "emptyfields") {
-                echo ' <div class="alert alert-danger alert-dismissible">Fill in all required fields
+                echo ' <div class="alert alert-danger alert-dismissible">Fill in all fields
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>';
+            }elseif ($_GET['error'] == "choosePayee") {
+                echo ' <div class="alert alert-danger alert-dismissible">Select a Payee
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -70,7 +82,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             </div>';
             }
             elseif ($_GET['error'] == "success") {
-                echo ' <div class="alert alert-success role="alert">Transaction recorded successfully
+                echo ' <div class="alert alert-success role="alert">New member added
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -78,100 +90,42 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             </div>';
             }
         }
+
         ?>
 
-        </ol>
-        <form action="<?php $_PHP_SELF ?>" method="POST" class="update-form">
-
-        <?php
-        require 'includes/connection.php';
-        $sql = "SELECT * FROM transact;";
-        $result = mysqli_query($conn,$sql);
-        while ($row = mysqli_fetch_array($result)) {
-
-          $ID = $row['transactId'];
-          $amount = $row['amount'];
-          $date = $row['date'];
-          $type = $row['type'];
-          $description = $row['notes'];
-        }
-        ?>
+        <form action="includes/newMember-Handler.php" method="post" class="signup-form">
         <div class="form-row">
-        <div class="form-group col-md-2 required">
-                <label for="date">Date</label>
-                <input type="date" name="transactionDate" class="form-control" value="<?php echo $date; ?>" >
-                <input type="hidden" name="ID" class="form-control" value="<?php echo $ID ?>" >
 
+
+        <div class="form-group col-md-6 ">
+        <label for="firstName">First Name: </label>
+                <input type="text" name="firstName" id="firstName" class="form-control">
             </div>
 
-        <div class="form-group col-md-2 required">
-                <label for="Amount">Amount </label>
-                <input type="text" name="amount" class="form-control" value="<?php echo $amount; ?>" >
+        <div class="form-group col-md-6 ">
+        <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName" class="form-control">
             </div>
 
-            <div class="form-group col-md-4">
-  <label for="sel1">Payment type</label>
-  <select class="form-control" name="selectList" value="<?php echo $type; ?>">
-    <option selected value="NULL">Choose...</option>
-    <option value="cash">cash</option>
-    <option value="cheque">cheque</option>
-    <option value="MTN Mobile Money">MTN Mobile Money</option>
-    <option value="Airtel Money">Airtel Money</option>
-    <option value="credit card">credit card</option>
-    <option value="EFT">EFT</option>
+            <div class="form-group col-md-12 ">
+            <label for="email">Email: </label>
+                <input type="email" name="email" id="email" class="form-control">
+            </div>
 
-  </select>
+            <div class="form-group col-md-12 ">
+            <label for="password">Password: </label>
+                <input type="password" name="password" id="password" class="form-control">
 </div>
 </div>
 
 <div class="form-group">
-    <label for="exampleFormControlTextarea1">Notes</label>
-    <textarea class="form-control" rows="3" name="notes" ><?php echo $description; ?></textarea>
-    <label for="required"><span>Required fields:</span><span style="color:#e32"> *</span></label>
+<label for="password">Confirm password: </label>
+                <input type="password" name="repeatPassword" id="password" class="form-control">
   </div>
 
-            <button type="submit" class="btn btn-success" name="updateTransaction">update</button>
+  <button type="submit" class="btn btn-success" name="submit">Save</button>
 
         </form>
-<?php
-if(isset($_POST['updateTransaction'])){
-  require 'includes/connection.php';
-
-    $id = $_POST ['ID'];
-    $date = $_POST['transactionDate'];
-    $amount = $_POST['amount'];
-    $type = $_POST['selectList'];
-    $notes = $_POST['notes'];
-
-    //Check if anything is empty
-    if(empty($date)|| empty($amount)){
-        header("Location: update.php?error=emptyfields&date=".$date."&amount=".$amount."&notes".$notes."&type".$type);
-    exit();
-
-    //Check for validation
-    }elseif(!preg_match("/^[1-9][0-9]*$/", $amount)){
-        header("Location: update.php?error=notint");
-        exit();
-    }
-
-    //Create prepared statements for validation
-    else{
-                $sql = "UPDATE transact SET date =?, amount=?, type=?, notes=? WHERE transactId=$id";
-                $statement = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($statement, $sql)){
-            header("Location: update.php?error=sqlerror");
-            exit();
-        }else {
-            $removeSlashes = stripslashes($notes);
-            mysqli_stmt_bind_param($statement, "siss",$date, $amount, $type,$removeSlashes);
-            mysqli_stmt_execute($statement);
-            header("Location: admin.php");
-        }
-        mysqli_stmt_close($statement);
-        mysqli_close($conn);
-      }
-}?>
-
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->

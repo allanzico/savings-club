@@ -1,7 +1,7 @@
 
 <?php 
-                  
                  
+                 require 'connection.php';
                   $id = $_SESSION['userID'];
                   $sql = "SELECT * FROM users WHERE userId =$id;";
                   $result = mysqli_query($conn,$sql);

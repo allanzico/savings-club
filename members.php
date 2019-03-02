@@ -56,32 +56,32 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         </ol>
 
         <!-- Icon Cards-->
-       
+
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
            Members
-          
+
             </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                
+
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Admin</th>
                     <th>Select </th>
-                    
-                    
+
+
                   </tr>
                 </thead>
-               
+
                 <tbody>
-                 <?php 
+                 <?php
                  $id = $_SESSION['userID'];
                  $sql = "SELECT * FROM users WHERE userId <> '$id';";
                  $result = mysqli_query($conn,$sql);
@@ -90,9 +90,9 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                  <?php
 
                  if ($resultCheck>0) {
-                   while ($row = mysqli_fetch_assoc($result)) { 
+                   while ($row = mysqli_fetch_assoc($result)) {
 
-                    
+
                      $firstName = $row['firstName'];
                      $lastName = $row['lastName'];
                      $email = $row['email'];
@@ -105,37 +105,40 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      <td><?php echo  $email ?></td>
                      <td><?php echo $admin ?></td>
                      <td><input type="checkbox" name="select" id=""  value="<?php echo $userId ?>" ></td>
-                     
-                     
+
+
                      </tr>
-                     
-                     
+
+
                      <?php   }
                 } ?>
-                 
-                
+
+
                 </tbody>
               </table>
             </div>
           </div>
 
-         
-              
-         
+
+
+
         </div>
-		
+
 <form class="form-inline">
   <div class="form-group mb-2">
+  <label for="select role">Change user role</label>
   <select class="form-control" name="selectRole">
                 <option selected value="NULL">Choose...</option>
                 <option value="admin" >Admin</option>
                 <option value="user" >User</option>
-                
-              
+
+
                   </select>
     </div>
-  
+
   <button type="submit" class="btn btn-primary mb-2">Change</button>
+  <label for="add new">Add new User</label>
+  <a href="addNewMember.php" class="btn btn-primary mb-2">Add</a>
 </form>
       </div>
       <!-- /.container-fluid -->
@@ -183,8 +186,8 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   <script src="js/demo/datatables-demo.js"></script>
   <script src="js/demo/chart-area-demo.js"></script>
 
-  <script type = "text/javascript">
-         
+  <!-- <script type = "text/javascript">
+
             function getConfirmation() {
                var retVal = confirm("Are you sure you want to delete this row?");
                if( retVal == true ) {
@@ -195,8 +198,8 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                   return false;
                }
             }
-         
-      </script> 
+
+      </script>  -->
 
 </body>
 

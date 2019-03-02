@@ -7,7 +7,7 @@ require 'includes/connection.php';
     $sql="DELETE FROM transact WHERE transact.transactId=$id;";
     $result = mysqli_query($conn,$sql);
     
-      header("Location: index.php"); 
+      header("Location: admin.php"); 
   }
  
   
