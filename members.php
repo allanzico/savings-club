@@ -58,6 +58,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         <!-- Icon Cards-->
 
         <!-- DataTables Example -->
+        <form action="members.php" method="POST">
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
@@ -65,7 +66,9 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
             </div>
           <div class="card-body">
+
             <div class="table-responsive">
+
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
@@ -104,7 +107,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      <td><?php echo $lastName ?></td>
                      <td><?php echo  $email ?></td>
                      <td><?php echo $admin ?></td>
-                     <td><input type="checkbox" name="select" id=""  value="<?php echo $userId ?>" ></td>
+                     <td><input type="checkbox" name="select" value="<?php echo $userId ?>" ></td>
 
 
                      </tr>
@@ -116,15 +119,36 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
                 </tbody>
               </table>
+
             </div>
+
           </div>
 
 
 
 
         </div>
+        </form>
+        <?php
+    if(isset($_POST['changeRole'])){
 
-<form class="form-inline">
+      if (!empty($_POST['select'])) {
+        $selected = $_POST['select'];
+
+          $roleQuery = "UPDATE 'users SET admin ='Y' WHERE userId=$selected";
+          $QueryResult = mysqli_query($conn, $roleQuery);
+          if($QueryResult === FALSE){
+              echo "Something went wrong." . mysqli_errno($conn) . ":". mysqli_error($conn);
+          }else{
+              echo "<h1>Changed</h1>";
+          }
+
+
+      }
+    }
+        ?>
+
+<form class="form-inline" action="members.php" method="POST">
   <div class="form-group mb-2">
   <label for="select role">Change user role</label>
   <select class="form-control" name="selectRole">
@@ -136,7 +160,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                   </select>
     </div>
 
-  <button type="submit" class="btn btn-primary mb-2">Change</button>
+  <button type="submit" class="btn btn-primary mb-2" name="changeRole">Change</button>
   <label for="add new">Add new User</label>
   <a href="addNewMember.php" class="btn btn-primary mb-2">Add</a>
 </form>
@@ -202,5 +226,4 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
       </script>  -->
 
 </body>
-
 </html>
