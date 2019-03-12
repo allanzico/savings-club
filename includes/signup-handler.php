@@ -1,4 +1,4 @@
-<?php 
+<?php
 define('included',TRUE);
 if(isset($_POST['submit'])){
     require 'connection.php';
@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
     elseif ($password !== $repeatPassword) {
         header("Location: ../register.php?error=emptyfields&firstName=".$firstName."&lastName=".$lastName."&email".$email);
    exit();
-    } 
+    }
 
     //Create prepared statements for validation
     else {
@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
             mysqli_stmt_store_result($statement);
             $resultCheck = mysqli_stmt_num_rows($statement);
             if ($resultCheck > 0) {
-                header("Location: ../register.php?error=usertaken&firstName=".$firstName."&lastName=".$lastName."&email".$email);
+                header("Location: ../register.php?error=usertaken&firstName=".$firstName."&lastName=".$lastName."&email=".$email);
                 exit();
             }else{
                 $sql = "INSERT INTO users (firstName, lastName, email, password ) VALUES (?,?,?,?)";
@@ -52,7 +52,7 @@ if(isset($_POST['submit'])){
         }else {
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            mysqli_stmt_bind_param($statement, "ssss",$firstName, $lastName,$email, $hashedPassword);
+            mysqli_stmt_bind_param($statement, "ssss", $firstName, $lastName, $email, $hashedPassword);
             mysqli_stmt_execute($statement);
             header("Location: ../register.php?error=success");
             exit();
