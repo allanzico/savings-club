@@ -43,7 +43,7 @@
       </div>
 
       <div class="jumbotron">
-        <h1 class="display-3">Jumbotron heading</h1>
+        <h1 class="display-3">CAPITAL LINK</h1>
         <p class="lead">Capital link savings club</p>
         <p><a class="btn btn-lg btn-success" href="register.php" role="button">Sign up today</a></p>
       </div>

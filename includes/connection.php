@@ -9,6 +9,9 @@ if(!defined('included')){
 $conn = mysqli_connect("capitallink.mysql.database.azure.com", "akanyijuka", "@P455word")
         OR DIE("<p>Unable to connect to the database server.</p>");
 
+// $conn = mysqli_connect("localhost", "root", "")
+// OR DIE("<p>Unable to connect to the database server.</p>");
+
 //Creating database if doesn't already exist and selecting
 $DBName = "savings_club";
 if (!mysqli_select_db($conn, $DBName)) {
