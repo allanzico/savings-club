@@ -1,22 +1,22 @@
 
-<?php 
-                 
+<?php
+
                  require 'connection.php';
                   $id = $_SESSION['userID'];
                   $sql = "SELECT * FROM users WHERE userId =$id;";
                   $result = mysqli_query($conn,$sql);
-                  $resultCheck = mysqli_num_rows($result); 
-                
+                  $resultCheck = mysqli_num_rows($result);
+
                   if ($resultCheck>0) {
-                    while ($row = mysqli_fetch_assoc($result)) { 
+                    while ($row = mysqli_fetch_assoc($result)) {
                       $firstName = $row['firstName'];
                       $lastName = $row['lastName'];
                       $email = $row['email'];
                       $admin = $row ['admin'];
-                    
+
                     }}
                                        ?>
-                
+
 
 
 <ul class="sidebar navbar-nav">
@@ -34,9 +34,9 @@
         </a>
 
       <?php  }
-          
+
          ?>
-        
+
       </li>
       <?php if ($admin == 'Y') { ?>
       <li class="nav-item">
@@ -70,12 +70,6 @@
         <a class="nav-link" href="profile.php">
           <i class="fas fa-users"></i>
           <span>My profile</span></a>
-
-          <li class="nav-item">
-        <a class="nav-link" href="members.php">
-          <i class="fas fa-users"></i>
-          <span>Members</span></a>
-      </li>
-
+        </li>
     <?php  } ?>
     </ul>

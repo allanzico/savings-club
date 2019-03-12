@@ -50,58 +50,58 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="index.php">Dashboard</a>
+            <a href="admin.php">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Record deposit</li>
         </ol>
-         
+
         </ol>
 
-        <?php 
+        <?php
         if (isset($_GET['error'])) {
             if ($_GET['error'] == "emptyfields") {
                 echo ' <div class="alert alert-danger alert-dismissible">Fill in all fields
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">      
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }elseif ($_GET['error'] == "choosePayee") {
                 echo ' <div class="alert alert-danger alert-dismissible">Select a Payee
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">       
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             } elseif ($_GET['error'] == "notint") {
                 echo ' <div class="alert alert-danger alert-dismissible">Enter a valid amount
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">   
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }
             elseif ($_GET['error'] == "success") {
                 echo ' <div class="alert alert-success role="alert">Transaction recorded successfully
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">   
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }
         }
-        
+
         ?>
 
         <form action="includes/savings-handler.php" method="post" class="signup-form">
         <div class="form-row">
 
-        
+
         <div class="form-group col-md-2 required">
                 <label for="date">Date</label>
                 <input type="date" name="transactionDate" class="form-control" >
             </div>
-        
+
         <div class="form-group col-md-2 required">
                 <label for="Amount">Amount </label>
                 <input type="text" name="amount" class="form-control" >
@@ -110,30 +110,30 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             <div class="form-group col-md-4 required">
                 <label for="payee">Payee: </label>
                 <!-- <input type="text" name="payee" id="email" class="form-control"> -->
-                <select class="form-control" name="payeeList"> 
-                <?php 
+                <select class="form-control" name="payeeList">
+                <?php
                 require 'includes/connection.php';
                  $sql = "SELECT * FROM users;";
                  $result = mysqli_query($conn,$sql);
-                 $resultCheck = mysqli_num_rows($result); 
+                 $resultCheck = mysqli_num_rows($result);
                  ?>
 
                 <option selected value="NULL">Choose...</option>
                 <?php
 
                  if ($resultCheck>0) {
-                   while ($row = mysqli_fetch_assoc($result)) { 
+                   while ($row = mysqli_fetch_assoc($result)) {
 
-                    
+
                      $firstName = $row['firstName'];
                      $userID = $row ['userID'];
                      ?>
 
                      <option value="<?php echo $firstName ?>"><?php  echo $firstName  ?></option>
-                     <?php } 
+                     <?php }
                     } ?>
 
-                
+
                 </select>
             </div>
 
@@ -147,9 +147,9 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
     <option value="Airtel Money">Airtel Money</option>
     <option value="credit card">credit card</option>
     <option value="EFT">EFT</option>
-   
+
   </select>
-</div> 
+</div>
 </div>
 
 <div class="form-group">
@@ -157,9 +157,9 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
     <textarea class="form-control" rows="3" name="notes"></textarea>
     <label for="required"><span>Required fields:</span><span style="color:#e32"> *</span></label>
   </div>
- 
+
             <button type="submit" class="btn btn-success" name="saveTransaction">Save</button>
-            
+
         </form>
       <!-- /.container-fluid -->
 

@@ -50,7 +50,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="index.php">Dashboard</a>
+            <a href="admin.php">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Overview</li>
         </ol>
@@ -65,26 +65,26 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                   <i class="fas fa-fw fa-hand-holding-usd"></i>
                 </div>
                 <h4 class="card-text">
-                  <?php 
-                  
+                  <?php
+
                   $sql = "SELECT FORMAT (SUM(amount), 3) AS total_savings FROM transact;";
                   $result = mysqli_query($conn,$sql);
                   $resultCheck = mysqli_num_rows($result);
- 
+
                   if ($resultCheck>0) {
                     while ($row = mysqli_fetch_assoc($result)) {
- 
+
                      $total_savings = $row['total_savings'];
-                     
-                      
+
+
                       echo "UGX " .$total_savings;
                     }
                   }
-                  
+
                   ?>
                 </h4>
               </div>
-            
+
             </div>
           </div>
           <div class="col-xl-3 col-sm-6 mb-3">
@@ -94,26 +94,26 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                   <i class="fas fa-fw fa-users"></i>
                 </div>
                 <div class="mr-5">
-                <?php 
-                  
+                <?php
+
                   $sql = "SELECT COUNT(firstName) AS total_members FROM users;";
                   $result = mysqli_query($conn,$sql);
                   $resultCheck = mysqli_num_rows($result);
- 
+
                   if ($resultCheck>0) {
                     while ($row = mysqli_fetch_assoc($result)) {
- 
+
                      $total_members = $row['total_members'];
                      ?>
                      <span class="index-cards"><?php echo $total_members." Users" ?></span>
                      <?php   }
                   }
-                  
+
                   ?>
-                
+
                 </div>
               </div>
-              
+
             </div>
           </div>
           <div class="col-xl-3 col-sm-6 mb-3">
@@ -155,26 +155,26 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
           <div class="card-header">
             <i class="fas fa-table"></i>
             Data Overview
-          
+
             </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                
+
                     <th>Payee</th>
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Payment type</th>
                     <th>Description</th>
                     <th>Update</th>
-                    
+
                   </tr>
                 </thead>
-               
+
                 <tbody>
-                 <?php 
+                 <?php
                  $sql = "SELECT * FROM transact;";
                  $result = mysqli_query($conn,$sql);
                  $resultCheck = mysqli_num_rows($result); ?>
@@ -182,9 +182,9 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                  <?php
 
                  if ($resultCheck>0) {
-                   while ($row = mysqli_fetch_assoc($result)) { 
+                   while ($row = mysqli_fetch_assoc($result)) {
 
-                    
+
                      $payee = $row['payee'];
                      $amount = $row['amount'];
                      $date = $row['date'];
@@ -197,17 +197,17 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      <td><?php echo $type ?></td>
                      <td><?php echo $description ?></td>
                      <td>
-                       
+
                      <a href="update.php?edit=<?php echo $row['transactId']; ?>"><span style=" color: 	#4169E1 ;"><i class="far fa-edit "></span></i></a> |
                      <a href="delete.php?delete=<?php echo $row['transactId']; ?>"  ><span style=" color: 	#FF0000 ;"><i class="fas fa-trash-alt"></span></i></a>
                     </td>
-                     
+
                      </tr>
 
                      <?php   }
                 } ?>
-                 
-                
+
+
                 </tbody>
               </table>
             </div>
@@ -262,7 +262,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   <script src="js/demo/chart-area-demo.js"></script>
 
   <script type = "text/javascript">
-         
+
             function getConfirmation() {
                var retVal = confirm("Are you sure you want to delete this row?");
                if( retVal == true ) {
@@ -273,8 +273,8 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                   return false;
                }
             }
-         
-      </script> 
+
+      </script>
 
 </body>
 

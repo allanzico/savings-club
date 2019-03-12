@@ -42,7 +42,48 @@
     <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
         <h1>Login</h1>
+        <?php
+        if (isset($_GET['error'])) {
+            if ($_GET['error'] == "emptyfields") {
+                echo ' <div class="alert alert-danger alert-dismissible">Fill in all fields
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
 
+            </div>';
+            }elseif ($_GET['error'] == "sqlerror") {
+                echo ' <div class="alert alert-danger alert-dismissible">Contact Admin
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>';
+            } elseif ($_GET['error'] == "wrongpwd") {
+                echo ' <div class="alert alert-danger alert-dismissible">Incorrect login details
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>';
+            }elseif ($_GET['error'] == "nouser") {
+                echo ' <div class="alert alert-danger alert-dismissible">user does not exist
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>';
+            }
+            elseif ($_GET['error'] == "success") {
+                echo ' <div class="alert alert-success role="alert">Registration successful
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>';
+            }
+        }
+
+        ?>
         <form action="includes/login-handler.php" method="post" class="login-form">
 
             <div class="form-group">
