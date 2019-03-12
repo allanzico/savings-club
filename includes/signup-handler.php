@@ -52,7 +52,7 @@ if(isset($_POST['submit'])){
         }else {
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-            mysqli_stmt_bind_param($statement, "ssss", $firstName, $lastName, $email, $hashedPassword);
+            mysqli_stmt_bind_param($statement, "ssss", $lastName, $firstName, $email, $hashedPassword);
             mysqli_stmt_execute($statement);
             header("Location: ../register.php?error=success");
             exit();
