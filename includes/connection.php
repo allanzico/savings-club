@@ -2,11 +2,11 @@
 
 if(!defined('included')){
         header("Location: ./404.html");
-        
+
         exit();
      }
 //Create connection to mysql server
-$conn = mysqli_connect("localhost", "root", "")
+$conn = mysqli_connect("capitallink.mysql.database.azure.com", "akanyijuka", "@P455word")
         OR DIE("<p>Unable to connect to the database server.</p>");
 
 //Creating database if doesn't already exist and selecting
