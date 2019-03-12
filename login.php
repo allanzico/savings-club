@@ -27,7 +27,7 @@
     <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
-              <a class="nav-link active" href="register.php">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login</a>
@@ -44,7 +44,7 @@
         <h1>Login</h1>
 
         <form action="includes/login-handler.php" method="post" class="login-form">
-            
+
             <div class="form-group">
                 <label for="email">Email: </label>
                 <input type="email" name="email" id="email" class="form-control">
@@ -55,9 +55,9 @@
                 <input type="password" name="password" id="password" class="form-control">
             </div>
             <button type="submit" name="login_user" class="btn btn-success">Login</button>
-            
+
         </form>
-        
+
     </div>
 </div>
 

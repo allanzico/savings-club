@@ -27,7 +27,7 @@
         <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
-              <a class="nav-link active" href="register.php">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login</a>
@@ -49,47 +49,47 @@
         </div>
         {{/if}} -->
         <!-- Send error message -->
-        <?php 
+        <?php
         if (isset($_GET['error'])) {
             if ($_GET['error'] == "emptyfields") {
                 echo ' <div class="alert alert-danger alert-dismissible">Fill in all fields
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">      
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }elseif ($_GET['error'] == "invalidemail") {
                 echo ' <div class="alert alert-danger alert-dismissible">Enter a valid email
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">       
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             } elseif ($_GET['error'] == "invalidname") {
                 echo ' <div class="alert alert-danger alert-dismissible">Enter a valid name
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">   
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }elseif ($_GET['error'] == "usertaken") {
                 echo ' <div class="alert alert-danger alert-dismissible">Email is taken
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">  
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }
             elseif ($_GET['error'] == "success") {
                 echo ' <div class="alert alert-success role="alert">Registration successful
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">   
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
-        
+
             </div>';
             }
         }
-        
+
         ?>
 
         <form action="includes/signup-handler.php" method="post" class="signup-form">
@@ -118,9 +118,9 @@
             </div>
 
             <button type="submit" class="btn btn-success" name="submit">Sign up</button>
-            
+
         </form>
-        
+
     </div>
 </div>
 
