@@ -44,19 +44,18 @@ if(isset($_POST['submit'])){
                 header("Location: ../register.php?error=usertaken&firstName=".$firstName."&lastName=".$lastName."&email=".$email);
                 exit();
             }else{
-                $sql = "INSERT INTO users (firstName, lastName, email, password ) VALUES (?,?,?,?)";
+                $sql = "INSERT INTO users (firstName, lastName, email, password ) VALUES (?,?,?,?);";
                 $statement = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($statement, $sql)){
-            header("Location: ../register.php?error=sqlerror");
-            exit();
-        }else {
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-            mysqli_stmt_bind_param($statement, "ssss", $lastName, $firstName, $email, $hashedPassword);
-            mysqli_stmt_execute($statement);
-            header("Location: ../register.php?error=success");
-            exit();
-        }
+                    if(!mysqli_stmt_prepare($statement, $sql)){
+                        header("Location: ../register.php?error=sqlerror");
+                        exit();
+                    }else {
+                        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                        mysqli_stmt_bind_param($statement, "ssss", $firstName, $lastName , $email, $hashedPassword);
+                        mysqli_stmt_execute($statement);
+                        header("Location: ../register.php?error=success");
+                        exit();
+                    }
             }
         }
     }
