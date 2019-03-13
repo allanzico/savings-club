@@ -1,4 +1,4 @@
-<?php 
+<?php
 define('included',TRUE);
 if(isset($_POST['saveTransaction'])){
     require 'connection.php';
@@ -10,8 +10,8 @@ if(isset($_POST['saveTransaction'])){
     $notes = $_POST['notes'];
     $removeSlashes = stripslashes($notes);
     $firstName = $payee;
-   
-    
+
+
 
     //Check if anything is empty
     if(empty($date)|| empty($amount) || empty($payee)){
@@ -22,7 +22,7 @@ if(isset($_POST['saveTransaction'])){
     }elseif(!preg_match("/^[1-9][0-9]*$/", $amount)){
         header("Location: ../add-savings.php?error=notint");
         exit();
-    
+
     }elseif ($payee == "NULL") {
         header("Location: ../add-savings.php?error=choosePayee&payee=".$payee);
     exit();
@@ -31,9 +31,9 @@ if(isset($_POST['saveTransaction'])){
     //Create prepared statements for validation
 
     else{
-                
-                
-                
+
+
+
                 // $sql = "INSERT INTO transact (date, amount, payee, type, notes, userId )
                 // SELECT '$date','$amount','$payee','$type','$removeSlashes', userId FROM users WHERE users.firstName='$firstName';
                 //  ";
@@ -55,14 +55,14 @@ if(isset($_POST['saveTransaction'])){
 
             // echo mysqli_errno($conn) . ": " . mysqli_error($conn) . "\n";
         }else {
-            // $removeSlashes = stripslashes($notes);
+            $removeSlashes = stripslashes($notes);
             mysqli_stmt_bind_param($statement, "sisss",$date, $amount,$payee, $type,$removeSlashes);
             mysqli_stmt_execute($statement);
             header("Location: ../add-savings.php?error=success");
             exit();
         }
             }
-        
+
     mysqli_stmt_close($statement);
     mysqli_close($conn);
 }else{

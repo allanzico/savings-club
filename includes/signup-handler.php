@@ -30,9 +30,9 @@ if(isset($_POST['submit'])){
 
     //Create prepared statements for validation
     else {
-        $sql = "SELECT * FROM users WHERE email=?";
+        $selectQuery = "SELECT * FROM users WHERE email=?";
         $statement = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($statement, $sql)){
+        if(!mysqli_stmt_prepare($statement, $selectQuery)){
             header("Location: ../register.php?error=sqlerror");
             exit();
         }else{
@@ -44,16 +44,18 @@ if(isset($_POST['submit'])){
                 header("Location: ../register.php?error=usertaken&firstName=".$firstName."&lastName=".$lastName."&email=".$email);
                 exit();
             }else{
-                $sql = "INSERT INTO users (firstName, lastName, email, password ) VALUES (?,?,?,?);";
+                $insertQuery = "INSERT INTO users (firstName, lastName, email, password ) VALUES (?, ?, ?, ?);";
                 $statement = mysqli_stmt_init($conn);
-                    if(!mysqli_stmt_prepare($statement, $sql)){
+                    if(!mysqli_stmt_prepare($statement, $insertQuery)){
                         header("Location: ../register.php?error=sqlerror");
                         exit();
                     }else {
                         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-                        mysqli_stmt_bind_param($statement, "ssss", $firstName, $lastName , $email, $hashedPassword);
+                        mysqli_stmt_bind_param($statement, 'ssss', $firstName, $lastName , $email, $hashedPassword);
                         mysqli_stmt_execute($statement);
-                        header("Location: ../register.php?error=success");
+                        //header("Location: ../register.php?error=success");
+                        echo mysqli_info($conn);
+                        var_dump($lastName);
                         exit();
                     }
             }

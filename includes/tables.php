@@ -5,11 +5,11 @@ include "connection.php";
 //Users table
 $users = "CREATE TABLE IF NOT EXISTS users(
     userId INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    firstName VARCHAR(15) NOT NULL,
-    lastName VARCHAR(20) NOT NULL,
-    email VARCHAR(45) NOT NULL UNIQUE,
+    firstName VARCHAR(50) NOT NULL,
+    lastName VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
     profileImage VARCHAR(100),
-    password CHAR(60) NOT NULL,
+    password BINARY(60) NOT NULL,
     admin ENUM('Y','N') DEFAULT 'N'
 
 )" ;
