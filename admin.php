@@ -168,6 +168,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                     <th>Date</th>
                     <th>Payment type</th>
                     <th>Description</th>
+                    <th>Paid For</th>
                     <th>Update</th>
 
                   </tr>
@@ -190,6 +191,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      $description = $row['notes'];
                      $firstName = $row ['firstName'];
                      $lastName = $row ['lastName'];
+                     $paidFor =$row['paidFor'];
                      ?>
                      <tr>
                      <td><?php echo $firstName." ".$lastName  ?></td>
@@ -197,6 +199,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      <td><?php echo $date ?></td>
                      <td><?php echo $type ?></td>
                      <td><?php echo $description ?></td>
+                     <td><?php echo $paidFor ?></td>
                      <td>
 
                      <a href="update.php?edit=<?php echo $row['transactId']; ?>"><span style=" color: 	#4169E1 ;"><i class="far fa-edit "></span></i></a> |

@@ -159,13 +159,14 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
 
                     <th>Payee</th>
                     <th>Amount</th>
                     <th>Date</th>
+                    <th>Paid For</th>
                     <th>Payment type</th>
                     <th>Description</th>
 
@@ -175,7 +176,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
                 <tbody>
                  <?php
-                 $sql = "SELECT * FROM transact;";
+                 $sql = "SELECT * FROM transact, users WHERE users.userId=transact.userId;";
                  $result = mysqli_query($conn,$sql);
                  $resultCheck = mysqli_num_rows($result); ?>
 
@@ -184,34 +185,24 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                  if ($resultCheck>0) {
                    while ($row = mysqli_fetch_assoc($result)) {
 
-
-                     $payee = $row['payee'];
                      $amount = $row['amount'];
                      $date = $row['date'];
                      $type = $row['type'];
-                     $description = $row['notes']; ?>
+                     $description = $row['notes'];
+                     $firstName = $row ['firstName'];
+                     $lastName = $row ['lastName'];
+                     $paidFor =$row['paidFor'];
+                     ?>
                      <tr>
-                     <td><?php echo $payee ?></td>
+                     <td><?php echo $firstName." ".$lastName  ?></td>
                      <td><?php echo $amount ?></td>
                      <td><?php echo $date ?></td>
+                     <td><?php echo $paidFor ?></td>
                      <td><?php echo $type ?></td>
                      <td><?php echo $description ?></td>
 
-
                      </tr>
 
-
-                     <!-- echo "<tr>";
-
-                      echo "<td>".$payee."</td>";
-                      echo "<td>".$amount."</td>";
-                      echo "<td>".$date."</td>";
-                      echo "<td>".$type."</td>";
-                      echo "<td>".$description."</td>";
-
-                      echo "<td><a href=\"add-savings.php?edit=$row[transactId]\" ><span style=\" color: 	#4169E1 ;\"><i class=\"far fa-edit \"></span></i></a> |
-                            <a href=\"includes/update.php?delete=$row[transactId]\" ><span style=\" color: 	#FF0000 ;\"><i class=\"fas fa-trash-alt\"></span></i></a></td>";
-                     echo "</tr>"; -->
                      <?php   }
                 } ?>
 

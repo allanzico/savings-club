@@ -6,12 +6,13 @@ if(isset($_POST['saveTransaction'])){
     $date = $_POST['transactionDate'];
     $amount = $_POST['amount'];
     $payeeEmail = $_POST['payeeEmail'];
+    $paidFor = $_POST['paidFor'];
     $type = $_POST['selectList'];
     $notes = $_POST['notes'];
     $removeSlashes = stripslashes($notes);
 
     //Check if anything is empty
-    if(empty($date)|| empty($amount) || empty($payeeEmail)){
+    if(empty($date)|| empty($amount) || empty($payeeEmail) || empty($paidFor)){
         header("Location: ../add-savings.php?error=emptyfields&date=".$date."&amount=".$amount."&payee".$payee."&notes".$notes."&type".$type);
     exit();
 
@@ -22,6 +23,9 @@ if(isset($_POST['saveTransaction'])){
 
     }elseif ($payeeEmail == "NULL") {
         header("Location: ../add-savings.php?error=choosePayee&payee=".$payeeEmail);
+    exit();
+    }elseif ($paidFor == "NULL") {
+        header("Location: ../add-savings.php?error=chooseReason&payee=".$payeeEmail);
     exit();
     }
 
@@ -42,7 +46,7 @@ if(isset($_POST['saveTransaction'])){
                 //     // header("Location: ../add-savings.php?error=sqlerror");
                 //     // exit();
                 // }
-                $sql = "INSERT INTO transact (date, amount, payeeEmail, type, notes, userId ) SELECT ?,?,?,?,?, userId FROM users WHERE users.email = '$payeeEmail'";
+                $sql = "INSERT INTO transact (date, amount, payeeEmail,paidFor, type, notes, userId ) SELECT ?,?,?,?,?,?, userId FROM users WHERE users.email = '$payeeEmail'";
                 $statement = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($statement, $sql)){
             header("Location: ../add-savings.php?error=sqlerror");
@@ -52,7 +56,7 @@ if(isset($_POST['saveTransaction'])){
         }else {
 
             $removeSlashes = stripslashes($notes);
-            mysqli_stmt_bind_param($statement, 'sisss',$date, $amount,$payeeEmail, $type,$removeSlashes);
+            mysqli_stmt_bind_param($statement, 'sissss',$date, $amount,$payeeEmail,$paidFor, $type,$removeSlashes);
             mysqli_stmt_execute($statement);
             // echo mysqli_info($conn);
 

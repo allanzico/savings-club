@@ -73,7 +73,15 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 </button>
 
             </div>';
-            } elseif ($_GET['error'] == "notint") {
+            } elseif ($_GET['error'] == "chooseReason") {
+              echo ' <div class="alert alert-danger alert-dismissible">Select the reason for payment
+              <button type="button" class="close" data-dismiss="alert" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+
+          </div>';
+          }
+            elseif ($_GET['error'] == "notint") {
                 echo ' <div class="alert alert-danger alert-dismissible">Enter a valid amount
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
@@ -139,7 +147,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
             <div class="form-group col-md-3 required">
                 <label for="payedFor">Payed for: </label>
-               <select class="form-control" name="payedFor">
+               <select class="form-control" name="paidFor">
                   <option selected value="NULL">Choose...</option>
                   <option value="fine">Fine</option>
                   <option value="subscription">Subscription</option>
