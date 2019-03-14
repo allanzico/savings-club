@@ -107,10 +107,10 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 <input type="text" name="amount" class="form-control" >
             </div>
 
-            <div class="form-group col-md-4 required">
-                <label for="payee">Payee: </label>
+            <div class="form-group col-md-3 required">
+                <label for="payee">Payee email: </label>
                 <!-- <input type="text" name="payee" id="email" class="form-control"> -->
-                <select class="form-control" name="payeeList">
+                <select class="form-control" name="payeeEmail">
                 <?php
                 require 'includes/connection.php';
                  $sql = "SELECT * FROM users;";
@@ -125,11 +125,11 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                    while ($row = mysqli_fetch_assoc($result)) {
 
 
-                     $firstName = $row['firstName'];
+                     $email = $row['email'];
                      $userID = $row ['userID'];
                      ?>
 
-                     <option value="<?php echo $firstName ?>"><?php  echo $firstName  ?></option>
+                     <option value="<?php echo $email ?>"><?php  echo $email ?></option>
                      <?php }
                     } ?>
 
@@ -137,7 +137,17 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 </select>
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3 required">
+                <label for="payedFor">Payed for: </label>
+               <select class="form-control" name="payedFor">
+                  <option selected value="NULL">Choose...</option>
+                  <option value="fine">Fine</option>
+                  <option value="subscription">Subscription</option>
+                  <option value="savings">Extra</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-2">
   <label for="sel1">Payment type</label>
   <select class="form-control" name="selectList">
     <option selected value="NULL">Choose...</option>

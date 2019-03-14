@@ -175,7 +175,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
                 <tbody>
                  <?php
-                 $sql = "SELECT * FROM transact;";
+                 $sql = "SELECT * FROM transact, users WHERE users.userId=transact.userId;";
                  $result = mysqli_query($conn,$sql);
                  $resultCheck = mysqli_num_rows($result); ?>
 
@@ -184,14 +184,15 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                  if ($resultCheck>0) {
                    while ($row = mysqli_fetch_assoc($result)) {
 
-
-                     $payee = $row['payee'];
                      $amount = $row['amount'];
                      $date = $row['date'];
                      $type = $row['type'];
-                     $description = $row['notes']; ?>
+                     $description = $row['notes'];
+                     $firstName = $row ['firstName'];
+                     $lastName = $row ['lastName'];
+                     ?>
                      <tr>
-                     <td><?php echo $payee ?></td>
+                     <td><?php echo $firstName." ".$lastName  ?></td>
                      <td><?php echo $amount ?></td>
                      <td><?php echo $date ?></td>
                      <td><?php echo $type ?></td>
