@@ -5,7 +5,7 @@ if(!defined('included')){
 
         exit();
      }
-Create connection to mysql server
+//Create connection to mysql server
 $conn = mysqli_connect("capitallink.mysql.database.azure.com", "akanyijuka@capitallink", "@P455word")
         OR DIE("<p>Unable to connect to the database server.</p>");
 

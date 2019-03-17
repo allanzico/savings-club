@@ -73,7 +73,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
+                    <!-- <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth -->
                   </p>
                 </div>
               </div>
@@ -119,14 +119,14 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                       <i class="mdi mdi-poll-box text-success icon-lg"></i>
                     </div>
                     <div class="float-right">
-                      <p class="mb-0 text-right">Sales</p>
+                      <p class="mb-0 text-right"></p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">5693</h3>
+                        <h3 class="font-weight-medium text-right mb-0"></h3>
                       </div>
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales
+                    <!-- <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales -->
                   </p>
                 </div>
               </div>
@@ -139,20 +139,20 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                       <i class="mdi mdi-account-location text-info icon-lg"></i>
                     </div>
                     <div class="float-right">
-                      <p class="mb-0 text-right">Employees</p>
+                      <p class="mb-0 text-right"></p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">246</h3>
+                        <h3 class="font-weight-medium text-right mb-0"></h3>
                       </div>
                     </div>
                   </div>
                   <p class="text-muted mt-3 mb-0">
-                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales
+                    <!-- <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales -->
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
@@ -203,7 +203,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-lg-12 grid-margin">
               <div class="card">
