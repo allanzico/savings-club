@@ -4,7 +4,7 @@
 session_start();
 define('included',TRUE);
 if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
-  header("Location: 404.html");
+  header("Location: 404.php");
 }
 
 
@@ -14,49 +14,32 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 <html lang="en">
 
 <head>
-
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>add-savings</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css">
-
+  <title>Capital Link</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
 </head>
 
-<body id="page-top">
-<?php require 'includes/header.php' ?>
-
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    <?php require 'includes/sidebar.php' ?>
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="admin.php">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Record deposit</li>
-        </ol>
-
-        </ol>
-
+<body>
+  <div class="container-scroller">
+  <?php require 'includes/navbar.php' ?>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+     <?php require 'includes/sidebar.php' ?>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
         <?php
         if (isset($_GET['error'])) {
             if ($_GET['error'] == "emptyfields") {
@@ -88,7 +71,14 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 </button>
 
             </div>';
-            }
+            }elseif ($_GET['error'] == "laterDate") {
+              echo ' <div class="alert alert-danger alert-dismissible">Date can not be beyond today
+              <button type="button" class="close" data-dismiss="alert" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+
+          </div>';
+          }
             elseif ($_GET['error'] == "success") {
                 echo ' <div class="alert alert-success role="alert">Transaction recorded successfully
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
@@ -100,125 +90,140 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         }
 
         ?>
+        <!-- add a trnsaction form starts -->
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add a transaction</h4>
+                  <form action="includes/savings-handler.php" method="post"class="form-sample">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row required">
+                          <label class="col-sm-3 col-form-label">Date</label>
+                          <div class="col-sm-9">
+                          <input type="date" name="transactionDate" class="form-control" >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row required">
+                          <label class="col-sm-3 col-form-label">Amount</label>
+                          <div class="col-sm-9">
+                          <input type="text" name="amount" class="form-control" >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row required">
+                          <label class="col-sm-3 col-form-label">Payee email</label>
+                          <div class="col-sm-9">
+                            <select class="form-control" name="payeeEmail">
+                            <?php
+                            require 'includes/connection.php';
+                            $sql = "SELECT * FROM users;";
+                            $result = mysqli_query($conn,$sql);
+                            $resultCheck = mysqli_num_rows($result);
+                            ?>
 
-        <form action="includes/savings-handler.php" method="post" class="signup-form">
-        <div class="form-row">
+                            <option selected value="NULL">Choose...</option>
+                            <?php
+
+                            if ($resultCheck>0) {
+                              while ($row = mysqli_fetch_assoc($result)) {
+                              $email = $row['email'];
+                              $userID = $row ['userID'];
+                              ?>
+                              <option value="<?php echo $email ?>"><?php  echo $email ?></option>
+                              <?php }
+                              } ?>
 
 
-        <div class="form-group col-md-2 required">
-                <label for="date">Date</label>
-                <input type="date" name="transactionDate" class="form-control" >
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row required">
+                          <label class="col-sm-3 col-form-label">Paid For</label>
+                          <div class="col-sm-9">
+                          <select class="form-control" name="paidFor">
+                            <option selected value="NULL">Choose...</option>
+                            <option value="fine">Fine</option>
+                            <option value="subscription">Subscription</option>
+                            <option value="savings">Extra</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Payment type</label>
+                          <div class="col-sm-9">
+                          <select class="form-control" name="selectList">
+                            <option selected value="NULL">Choose...</option>
+                            <option value="cash">cash</option>
+                            <option value="cheque">cheque</option>
+                            <option value="MTN Mobile Money">MTN Mobile Money</option>
+                            <option value="Airtel Money">Airtel Money</option>
+                            <option value="credit card">credit card</option>
+                            <option value="EFT">EFT</option>
+
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Notes</label>
+                          <div class="col-sm-12">
+                          <textarea class="form-control" rows="3" name="notes"></textarea>
+
+                          </div>
+
+                        </div>
+                        <label for="required"><span>Required fields:</span><span style="color:#e32"> *</span></label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" name="saveTransaction">Save</button>
+                  </form>
+                </div>
+              </div>
             </div>
-
-        <div class="form-group col-md-2 required">
-                <label for="Amount">Amount </label>
-                <input type="text" name="amount" class="form-control" >
-            </div>
-
-            <div class="form-group col-md-3 required">
-                <label for="payee">Payee email: </label>
-                <!-- <input type="text" name="payee" id="email" class="form-control"> -->
-                <select class="form-control" name="payeeEmail">
-                <?php
-                require 'includes/connection.php';
-                 $sql = "SELECT * FROM users;";
-                 $result = mysqli_query($conn,$sql);
-                 $resultCheck = mysqli_num_rows($result);
-                 ?>
-
-                <option selected value="NULL">Choose...</option>
-                <?php
-
-                 if ($resultCheck>0) {
-                   while ($row = mysqli_fetch_assoc($result)) {
-
-
-                     $email = $row['email'];
-                     $userID = $row ['userID'];
-                     ?>
-
-                     <option value="<?php echo $email ?>"><?php  echo $email ?></option>
-                     <?php }
-                    } ?>
-
-
-                </select>
-            </div>
-
-            <div class="form-group col-md-3 required">
-                <label for="payedFor">Payed for: </label>
-               <select class="form-control" name="paidFor">
-                  <option selected value="NULL">Choose...</option>
-                  <option value="fine">Fine</option>
-                  <option value="subscription">Subscription</option>
-                  <option value="savings">Extra</option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-2">
-  <label for="sel1">Payment type</label>
-  <select class="form-control" name="selectList">
-    <option selected value="NULL">Choose...</option>
-    <option value="cash">cash</option>
-    <option value="cheque">cheque</option>
-    <option value="MTN Mobile Money">MTN Mobile Money</option>
-    <option value="Airtel Money">Airtel Money</option>
-    <option value="credit card">credit card</option>
-    <option value="EFT">EFT</option>
-
-  </select>
-</div>
-</div>
-
-<div class="form-group">
-    <label for="exampleFormControlTextarea1">Notes</label>
-    <textarea class="form-control" rows="3" name="notes"></textarea>
-    <label for="required"><span>Required fields:</span><span style="color:#e32"> *</span></label>
-  </div>
-
-            <button type="submit" class="btn btn-success" name="saveTransaction">Save</button>
-
-        </form>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
           </div>
+          <?php require 'includes/logout-modal.php' ?>
+          <!-- add a transaction form ends -->
         </div>
-      </footer>
-
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+        <?php require 'includes/footer.php' ?>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
     </div>
-    <!-- /.content-wrapper -->
-    <?php require 'includes/logout-modal.php' ?>
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- /#wrapper -->
+  <!-- container-scroller -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script>
-
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <!-- End custom js for this page-->
 </body>
+
 </html>

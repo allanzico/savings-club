@@ -4,7 +4,7 @@
 session_start();
 define('included',TRUE);
 if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
-  header("Location: 404.html");
+  header("Location: 404.php");
 }
 
 
@@ -14,49 +14,32 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 <html lang="en">
 
 <head>
-
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>add-savings</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css">
-
+  <title>Capital Link</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
 </head>
 
-<body id="page-top">
-<?php require 'includes/header.php' ?>
-
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    <?php require 'includes/sidebar.php' ?>
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="admin.php">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">add new member</li>
-        </ol>
-
-        </ol>
-
+<body>
+  <div class="container-scroller">
+  <?php require 'includes/navbar.php' ?>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+     <?php require 'includes/sidebar.php' ?>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
         <?php
         if (isset($_GET['error'])) {
             if ($_GET['error'] == "emptyfields") {
@@ -66,15 +49,22 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 </button>
 
             </div>';
-            }elseif ($_GET['error'] == "choosePayee") {
-                echo ' <div class="alert alert-danger alert-dismissible">Select a Payee
+            }elseif ($_GET['error'] == "invalidemail") {
+                echo ' <div class="alert alert-danger alert-dismissible">Enter a valid email
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
 
             </div>';
-            } elseif ($_GET['error'] == "notint") {
-                echo ' <div class="alert alert-danger alert-dismissible">Enter a valid amount
+            } elseif ($_GET['error'] == "invalidname") {
+                echo ' <div class="alert alert-danger alert-dismissible">Enter a valid name
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>';
+            }elseif ($_GET['error'] == "usertaken") {
+                echo ' <div class="alert alert-danger alert-dismissible">Email is taken
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -82,7 +72,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             </div>';
             }
             elseif ($_GET['error'] == "success") {
-                echo ' <div class="alert alert-success role="alert">New member added
+                echo ' <div class="alert alert-success role="alert">Registration successful
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -92,80 +82,93 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
         }
 
         ?>
-
-        <form action="includes/newMember-Handler.php" method="post" class="signup-form">
-        <div class="form-row">
-
-
-        <div class="form-group col-md-6 ">
-        <label for="firstName">First Name: </label>
-                <input type="text" name="firstName" id="firstName" class="form-control">
+        <!-- add a trnsaction form starts -->
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add a new member</h4>
+                  <form action="includes/newMember-handler.php" method="post" class="form-sample">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">First name</label>
+                          <div class="col-sm-9">
+                          <input type="text" name="firstName" id="firstName" class="form-control" >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Last name</label>
+                          <div class="col-sm-9">
+                          <input type="text" name="lastName" id="lastName" class="form-control" >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Email</label>
+                          <div class="col-sm-9">
+                          <input type="email" name="email" id="email" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Password</label>
+                          <div class="col-sm-9">
+                          <input type="password" name="password" id="password" class="form-control" >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Confirm password</label>
+                          <div class="col-sm-9">
+                          <input type="password" name="repeatPassword" id="password" class="form-control" >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" name="submit">Save</button>
+                  </form>
+                </div>
+              </div>
             </div>
-
-        <div class="form-group col-md-6 ">
-        <label for="lastName">Last Name</label>
-                <input type="text" name="lastName" id="lastName" class="form-control">
-            </div>
-
-            <div class="form-group col-md-12 ">
-            <label for="email">Email: </label>
-                <input type="email" name="email" id="email" class="form-control">
-            </div>
-
-            <div class="form-group col-md-12 ">
-            <label for="password">Password: </label>
-                <input type="password" name="password" id="password" class="form-control">
-</div>
-</div>
-
-<div class="form-group">
-<label for="password">Confirm password: </label>
-                <input type="password" name="repeatPassword" id="password" class="form-control">
-  </div>
-
-  <button type="submit" class="btn btn-success" name="submit">Save</button>
-
-        </form>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
           </div>
+          <?php require 'includes/logout-modal.php' ?>
         </div>
-      </footer>
-
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+        <?php require 'includes/footer.php' ?>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
     </div>
-    <!-- /.content-wrapper -->
-    <?php require 'includes/logout-modal.php' ?>
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- /#wrapper -->
+  <!-- container-scroller -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script>
-
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <!-- End custom js for this page-->
 </body>
+
 </html>

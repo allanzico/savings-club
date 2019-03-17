@@ -36,7 +36,7 @@ if(isset($_POST['login_user'])){
                    }else {
                     header("Location: ../admin.php?login=success");
                    }
-                  
+
                }else{
                 header("Location: ../login.php?=wrongpwd");
                 exit();

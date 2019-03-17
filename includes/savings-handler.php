@@ -10,6 +10,7 @@ if(isset($_POST['saveTransaction'])){
     $type = $_POST['selectList'];
     $notes = $_POST['notes'];
     $removeSlashes = stripslashes($notes);
+    $dateToday = date("m/d/Y");
 
     //Check if anything is empty
     if(empty($date)|| empty($amount) || empty($payeeEmail) || empty($paidFor)){
@@ -28,6 +29,10 @@ if(isset($_POST['saveTransaction'])){
         header("Location: ../add-savings.php?error=chooseReason&payee=".$payeeEmail);
     exit();
     }
+    // elseif ($date > $dateToday) {
+    //     header("Location: ../add-savings.php?error=laterDate&date=".$date);
+    // exit();
+    // }
 
     //Create prepared statements for validation
 

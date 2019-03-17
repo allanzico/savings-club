@@ -27,6 +27,15 @@ $Transaction = "CREATE TABLE IF NOT EXISTS transact(
     FOREIGN KEY(userId) REFERENCES users (userId)
 )";
 
+//Petty Cash
+$Transaction = "CREATE TABLE IF NOT EXISTS pettyCash(
+    cashId INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    type VARCHAR(50) ,
+    debit INT(50) DEFAULT 0,
+    credit INT(50) DEFAULT 0,
+    notes VARCHAR(250)
+)";
 
 
 ?>

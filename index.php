@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Index</title>
+    <title>Capital Link</title>
 
 
     <!-- Bootstrap core CSS -->
@@ -54,12 +54,7 @@
         <p>&copy; Allan 2019</p>
       </footer>
 
-    </div> <!-- /container -->
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    </div>
     <script src="js/main.js"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@ session_start();
 define('included',TRUE);
 require 'includes/connection.php';
 if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
-  header("Location: 404.html");
+  header("Location: 404.php");
 }
 
 
@@ -14,168 +14,203 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 <html lang="en">
 
 <head>
-
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
   <title>Capital Link</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css">
-
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.addons.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
 </head>
 
-<body id="page-top">
-<?php require 'includes/header.php' ?>
-
-  <div id="wrapper">
-
-    <!-- Sidebar -->
+<body>
+  <div class="container-scroller">
+  <?php require 'includes/navbar.php' ?>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
     <?php require 'includes/sidebar.php' ?>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
 
-    <div id="content-wrapper">
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-cube text-danger icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">Total Revenue</p>
+                      <div class="fluid-container">
+                        <h4 class="font-weight-medium text-right mb-0">
 
-      <div class="container-fluid">
+                        <?php
 
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="user.php">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Overview</li>
-        </ol>
+                            $sql = "SELECT FORMAT (SUM(amount), 3) AS total_savings FROM transact;";
+                            $result = mysqli_query($conn,$sql);
+                            $resultCheck = mysqli_num_rows($result);
+                            if ($resultCheck>0) {
+                              while ($row = mysqli_fetch_assoc($result)) {
+                              $total_savings = $row['total_savings'];
+                                echo "UGX " .$total_savings;
+                              }
+                            }
 
-        <!-- Icon Cards-->
-        <div class="row">
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-primary o-hidden h-100">
-              <div class="card-body">
-              <h5 class="card-title">Total savings</h5>
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-hand-holding-usd"></i>
-                </div>
-                <h4 class="card-text">
-                  <?php
+                            ?>
 
-                  $sql = "SELECT FORMAT (SUM(amount), 3) AS total_savings FROM transact;";
-                  $result = mysqli_query($conn,$sql);
-                  $resultCheck = mysqli_num_rows($result);
-
-                  if ($resultCheck>0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-
-                     $total_savings = $row['total_savings'];
-
-
-                      echo "UGX " .$total_savings;
-                    }
-                  }
-
-                  ?>
-                </h4>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body align-items-center d-flex justify-content-center">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-users"></i>
-                </div>
-                <div class="mr-5">
-                <?php
-
-                  $sql = "SELECT COUNT(firstName) AS total_members FROM users;";
-                  $result = mysqli_query($conn,$sql);
-                  $resultCheck = mysqli_num_rows($result);
-
-                  if ($resultCheck>0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-
-                     $total_members = $row['total_members'];
-                     ?>
-                     <span class="index-cards"><?php echo $total_members." Users" ?></span>
-                     <?php   }
-                  }
-
-                  ?>
-
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth
+                  </p>
                 </div>
               </div>
-
             </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body align-items-center d-flex justify-content-center">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-shopping-cart"></i>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-receipt text-warning icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">Orders</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">3455</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
+                  </p>
                 </div>
-                <div class="mr-5">123 New Orders!</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
             </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-danger o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-life-ring"></i>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-poll-box text-success icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">Sales</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">5693</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales
+                  </p>
                 </div>
-                <div class="mr-5">13 New Tickets!</div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-account-location text-info icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="mb-0 text-right">Employees</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium text-right mb-0">246</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Overview
-
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-4">Manage Tickets</h5>
+                  <div class="fluid-container">
+                    <div class="row ticket-card mt-3">
+                      <div class="col-md-1">
+                        <img class="img-sm rounded-circle mb-4 mb-md-0" src="images/faces/face3.jpg" alt="profile image">
+                      </div>
+                      <div class="ticket-details col-md-9">
+                        <div class="d-flex">
+                          <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">John Doe :</p>
+                          <p class="text-primary mr-1 mb-0">[#23246]</p>
+                          <p class="mb-0 ellipsis">Mauris blandit aliquet elit, eget tincidunt nibh pulvinar.</p>
+                        </div>
+                        <p class="text-gray ellipsis mb-2">Nulla quis lorem ut libero malesuada feugiat. Proin eget tortor risus. Lorem ipsum dolor sit amet.</p>
+                        <div class="row text-gray d-md-flex d-none">
+                          <div class="col-4 d-flex">
+                            <small class="mb-0 mr-2 text-muted">Last responded :</small>
+                            <small class="Last-responded mr-2 mb-0 text-muted">3 hours ago</small>
+                          </div>
+                          <div class="col-4 d-flex">
+                            <small class="mb-0 mr-2 text-muted">Due in :</small>
+                            <small class="Last-responded mr-2 mb-0 text-muted">2 Days</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ticket-actions col-md-2">
+                        <div class="btn-group dropdown">
+                          <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">
+                              <i class="fa fa-reply fa-fw"></i>Quick reply</a>
+                            <a class="dropdown-item" href="#">
+                              <i class="fa fa-history fa-fw"></i>Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                              <i class="fa fa-check text-success fa-fw"></i>Resolve Issue</a>
+                            <a class="dropdown-item" href="#">
+                              <i class="fa fa-times text-danger fa-fw"></i>Close Issue</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          <div class="card-body">
-            <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-
-                    <th>Payee</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Paid For</th>
-                    <th>Payment type</th>
-                    <th>Description</th>
-
-
-                  </tr>
-                </thead>
-
-                <tbody>
-                 <?php
+          </div>
+          <div class="row">
+            <div class="col-lg-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Savings list</h4>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                        <th>Payee</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Payment type</th>
+                        <th>Description</th>
+                        <th>Paid For</th>
+                        <th>Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <?php
                  $sql = "SELECT * FROM transact, users WHERE users.userId=transact.userId;";
                  $result = mysqli_query($conn,$sql);
                  $resultCheck = mysqli_num_rows($result); ?>
@@ -185,7 +220,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                  if ($resultCheck>0) {
                    while ($row = mysqli_fetch_assoc($result)) {
 
-                     $amount = $row['amount'];
+                     $amount = number_format($row['amount']);
                      $date = $row['date'];
                      $type = $row['type'];
                      $description = $row['notes'];
@@ -195,86 +230,60 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      ?>
                      <tr>
                      <td><?php echo $firstName." ".$lastName  ?></td>
-                     <td><?php echo $amount ?></td>
+                     <td>UGX <?php echo $amount ?></td>
                      <td><?php echo $date ?></td>
-                     <td><?php echo $paidFor ?></td>
                      <td><?php echo $type ?></td>
                      <td><?php echo $description ?></td>
+                     <td><?php echo $paidFor ?></td>
+                     <td>
+
+                     <a href="update.php?edit=<?php echo $row['transactId']; ?>"><span style=" color: 	#4169E1 ;"><i class="far fa-edit "></span></i></a> |
+                     <a href="delete.php?delete=<?php echo $row['transactId']; ?>"  ><span style=" color: 	#FF0000 ;"><i class="fas fa-trash-alt"></span></i></a>
+                    </td>
 
                      </tr>
 
                      <?php   }
-                } ?>
+                } else { ?>
+                  <span class="text-danger mr-1 mb-0"><?php echo " No results "?></span>
 
+               <?php } ?>
 
-                </tbody>
-              </table>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          <?php require 'includes/logout-modal.php' ?>
         </div>
-
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+        <?php require 'includes/footer.php' ?>
+        </footer>
+        <!-- partial -->
       </div>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-
+      <!-- main-panel ends -->
     </div>
-    <!-- /.content-wrapper -->
-
+    <!-- page-body-wrapper ends -->
   </div>
-  <!-- /#wrapper -->
+  <!-- container-scroller -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <?php require 'includes/logout-modal.php' ?>
-
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script>
-
-  <script type = "text/javascript">
-
-            function getConfirmation() {
-               var retVal = confirm("Are you sure you want to delete this row?");
-               if( retVal == true ) {
-                window.location.href = 'delete.php';
-                  return true;
-               } else {
-                window.location.href = 'index.php';
-                  return false;
-               }
-            }
-
-      </script>
-
+  <!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <script src="vendors/js/vendor.bundle.addons.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="js/off-canvas.js"></script>
+  <script src="js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+  <!-- End custom js for this page-->
 </body>
 
 </html>
