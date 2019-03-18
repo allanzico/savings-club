@@ -1,24 +1,20 @@
 <?php
+require 'connection.php';
+$id = $_SESSION['userID'];
+$sql = "SELECT * FROM users WHERE userId =$id;";
+$result = mysqli_query($conn,$sql);
+$resultCheck = mysqli_num_rows($result);
 
-                 require 'connection.php';
-                  $id = $_SESSION['userID'];
-                  $sql = "SELECT * FROM users WHERE userId =$id;";
-                  $result = mysqli_query($conn,$sql);
-                  $resultCheck = mysqli_num_rows($result);
+if ($resultCheck>0) {
+while ($row = mysqli_fetch_assoc($result)) {
+$firstName = $row['firstName'];
+$lastName = $row['lastName'];
+$email = $row['email'];
+$admin = $row ['admin'];
 
-                  if ($resultCheck>0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                      $firstName = $row['firstName'];
-                      $lastName = $row['lastName'];
-                      $email = $row['email'];
-                      $admin = $row ['admin'];
-
-                    }}
-                                       ?>
-
+}} ?>
 
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-
         <ul class="nav">
           <li class="nav-item nav-profile">
             <div class="nav-link">
@@ -35,7 +31,8 @@
                     } else {
                       echo "User";
                     }
-                    ?></small>
+                    ?>
+                    </small>
                     <span class="status-indicator online"></span>
                   </div>
                 </div>

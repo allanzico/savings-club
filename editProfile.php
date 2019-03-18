@@ -5,6 +5,75 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   header("Location: 404.php");
   $id = $_SESSION['userID'];
 }
+if(isset($_POST['update'])){
+    require 'includes/connection.php';
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+
+    //Check if anything is empty
+    if(empty($firstName)|| empty($lastName) || empty($email)){
+        header("Location: editProfile.php?error=emptyfields&firstName=".$firstName."&lastName=".$lastName."&email".$email);
+    exit();
+
+    //Check for validation
+    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        header("Location: editProfile.php?error=invalidemail");
+        exit();
+    }
+    elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName)) {
+        header("Location: editProfile.php?error=invalidname&email=".$email);
+    exit();
+    }elseif (!preg_match("/^[a-zA-Z0-9]*$/",$lastName)) {
+      header("Location: ../register.php?error=invalidname&email=".$email);
+  exit();
+  }else{
+    $insertQuery = "UPDATE users SET firstName=?, lastName=?, email=? WHERE userId=$id;";
+                $statement = mysqli_stmt_init($conn);
+                    if(!mysqli_stmt_prepare($statement, $insertQuery)){
+                        header("Location: editProfile.php?error=sqlerror");
+                        exit();
+                    }else {
+                        mysqli_stmt_bind_param($statement,'sss', $firstName, $lastName , $email);
+                        mysqli_stmt_execute($statement);
+                        header("Location: profile.php?error=success");
+                        unset($_POST);
+                        exit();
+  } }
+    //Create prepared statements for validation
+    //else {
+    //     $selectQuery = "SELECT * FROM users WHERE email=?";
+    //     $statement = mysqli_stmt_init($conn);
+    //     if(!mysqli_stmt_prepare($statement, $selectQuery)){
+    //         header("Location: editProfile.php?error=sqlerror");
+    //         exit();
+    //     }else{
+    //         mysqli_stmt_bind_param($statement, "s", $email);
+    //         mysqli_stmt_execute($statement);
+    //         mysqli_stmt_store_result($statement);
+    //         $resultCheck = mysqli_stmt_num_rows($statement);
+    //         if($resultCheck > 0){
+    //           header("Location: editProfile.php?error=usertaken&firstName=".$firstName."&lastName=".$lastName."&email=".$email);
+    //           exit();
+    //         }else{
+    //             $insertQuery = "UPDATE users SET firstName=?, lastName=?, email=? WHERE userId=$id";
+    //             $statement = mysqli_stmt_init($conn);
+    //                 if(!mysqli_stmt_prepare($statement, $insertQuery)){
+    //                     header("Location: editProfile.php?error=sqlerror");
+    //                     exit();
+    //                 }else {
+    //                     mysqli_stmt_bind_param($statement,'sss', $firstName, $lastName , $email);
+    //                     mysqli_stmt_execute($statement);
+    //                     header("Location: profile.php?error=success");
+    //                     unset($_POST);
+    //                     exit();
+    //                 }
+    //         }
+    //     }
+    // }
+    mysqli_stmt_close($statement);
+    mysqli_close($conn);
+}
 ?>
 
 <!DOCTYPE html>
@@ -121,66 +190,6 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                 </div>
               </div>
             </div>
-            <?php
-            ob_start();
-            if(isset($_POST['update'])){
-                    require 'includes/connection.php';
-                    $firstName = $_POST['firstName'];
-                    $lastName = $_POST['lName'];
-                    $email = $_POST['email'];
-
-                    //Check if anything is empty
-                    if(empty($firstName)|| empty($lastName) || empty($email)){
-                        header("Location: editProfile.php?error=emptyfields&firstName=".$firstName."&lastName=".$lastName."&email".$email);
-                    exit();
-
-                    //Check for validation
-                    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                        header("Location: editProfile.php?error=invalidemail");
-                        exit();
-                    }
-                    elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName)) {
-                        header("Location: editProfile.php?error=invalidname&email=".$email);
-                    exit();
-                    }elseif (!preg_match("/^[a-zA-Z0-9]*$/",$lastName)) {
-                      header("Location: ../register.php?error=invalidname&email=".$email);
-                  exit();
-                  }
-                    //Create prepared statements for validation
-                    else {
-                        $selectQuery = "SELECT * FROM users WHERE email=?";
-                        $statement = mysqli_stmt_init($conn);
-                        if(!mysqli_stmt_prepare($statement, $selectQuery)){
-                            header("Location: editProfile.php?error=sqlerror");
-                            exit();
-                        }else{
-                            mysqli_stmt_bind_param($statement, "s", $email);
-                            mysqli_stmt_execute($statement);
-                            mysqli_stmt_store_result($statement);
-                            $resultCheck = mysqli_stmt_num_rows($statement);
-                            if($resultCheck > 0){
-                             header("Location: editProfile.php?error=usertaken&firstName=".$firstName."&lastName=".$lastName."&email=".$email);
-                             exit();
-                            }else{
-                                $insertQuery = "INSERT INTO users (firstName, lastName, email) VALUES (?,?,?);";
-                                $statement = mysqli_stmt_init($conn);
-                                    if(!mysqli_stmt_prepare($statement, $insertQuery)){
-                                        header("Location: editProfile.php?error=sqlerror");
-                                        exit();
-                                    }else {
-                                        mysqli_stmt_bind_param($statement,'sss', $firstName, $lastName , $email);
-                                        mysqli_stmt_execute($statement);
-                                        header("Location: profile.php?error=success");
-                                        unset($_POST);
-                                        exit();
-                                    }
-                            }
-                        }
-                    }
-                    mysqli_stmt_close($statement);
-                    mysqli_close($conn);
-                }
-                ob_end_flush(); ?>
           </div>
           <?php require 'includes/logout-modal.php' ?>
         </div>
