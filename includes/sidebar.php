@@ -40,10 +40,9 @@
                   </div>
                 </div>
               </div>
-              <?php if ($admin == 'Y') { ?>
-              <a href="add-savings.php" class="btn btn-success btn-block">New Deposit
-                <i class="mdi mdi-plus"></i>
-                </a>
+              <?php if($admin == 'Y') { ?>
+              <a href="add-savings.php" class="btn btn-success btn-block">New Deposit<i class="mdi mdi-plus"></i>
+              </a>
               </button>
             </div>
           </li>

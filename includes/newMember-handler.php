@@ -19,8 +19,11 @@ if(isset($_POST['submit'])){
         header("Location: ../addNewMember.php?error=invalidemail");
         exit();
     }
-    elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName, $lastName)) {
+    elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName)) {
         header("Location: ../addNewMember.php?error=invalidname&email=".$email);
+    exit();
+    }elseif (!preg_match("/^[a-zA-Z0-9]*$/",$lastName)) {
+        header("Location: ../register.php?error=invalidname&email=".$email);
     exit();
     }
     elseif ($password !== $repeatPassword) {

@@ -15,11 +15,14 @@ if(isset($_POST['submit'])){
     exit();
 
     //Check for validation
-    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $firstName, $lastName)){
+    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL) && filter_var($email, FILTER_SANITIZE_EMAIL)){
         header("Location: ../register.php?error=invalidemail");
         exit();
     }
-    elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName, $lastName)) {
+    elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName)) {
+        header("Location: ../register.php?error=invalidname&email=".$email);
+    exit();
+    }elseif (!preg_match("/^[a-zA-Z0-9]*$/",$lastName)) {
         header("Location: ../register.php?error=invalidname&email=".$email);
     exit();
     }
@@ -53,9 +56,9 @@ if(isset($_POST['submit'])){
                         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                         mysqli_stmt_bind_param($statement, 'ssss', $firstName, $lastName , $email, $hashedPassword);
                         mysqli_stmt_execute($statement);
-                        //header("Location: ../register.php?error=success");
-                        echo mysqli_info($conn);
-                        var_dump($lastName);
+                        header("Location: ../register.php?error=success");
+                        //echo mysqli_info($conn);
+                        // var_dump($lastName);
                         exit();
                     }
             }
