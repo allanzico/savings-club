@@ -3,29 +3,32 @@ session_start();
 define('included',TRUE);
 if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
   header("Location: 404.php");
-  $id = $_SESSION['userID'];
+
 }
+
 if(isset($_POST['update'])){
-    require 'includes/connection.php';
+  require 'includes/connection.php';
+   $id = $_SESSION['userID'];
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
 
     //Check if anything is empty
     if(empty($firstName)|| empty($lastName) || empty($email)){
-        header("Location: editProfile.php?error=emptyfields&firstName=".$firstName."&lastName=".$lastName."&email".$email);
+       header("Location: editProfile.php?error=emptyfields&firstName=".$firstName."&lastName=".$lastName."&email".$email);
     exit();
 
     //Check for validation
-    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        header("Location: editProfile.php?error=invalidemail");
+    }
+    elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+      header("Location: editProfile.php?error=invalidEmail");
         exit();
     }
     elseif (!preg_match("/^[a-zA-Z0-9]*$/", $firstName)) {
-        header("Location: editProfile.php?error=invalidname&email=".$email);
+       header("Location: editProfile.php?error=invalidname&email=".$email);
     exit();
     }elseif (!preg_match("/^[a-zA-Z0-9]*$/",$lastName)) {
-      header("Location: ../register.php?error=invalidname&email=".$email);
+      header("Location: editProfile.php?error=invalidname&email=".$email);
   exit();
   }else{
     $insertQuery = "UPDATE users SET firstName=?, lastName=?, email=? WHERE userId=$id;";
@@ -34,12 +37,13 @@ if(isset($_POST['update'])){
                         header("Location: editProfile.php?error=sqlerror");
                         exit();
                     }else {
-                        mysqli_stmt_bind_param($statement,'sss', $firstName, $lastName , $email);
+                        mysqli_stmt_bind_param($statement,'ssss', $firstName, $lastName , $email);
                         mysqli_stmt_execute($statement);
+                        echo mysqli_info($conn);
                         header("Location: profile.php?error=success");
-                        unset($_POST);
                         exit();
-  } }
+  }
+}
     //Create prepared statements for validation
     //else {
     //     $selectQuery = "SELECT * FROM users WHERE email=?";
@@ -146,7 +150,7 @@ if(isset($_POST['update'])){
               <div class="card">
                 <div class="card-body">
                 <?php
-                  require 'includes/connection.php';
+                require 'includes/connection.php';
                   $sql = "SELECT * FROM users WHERE userId=$id;";
                   $result = mysqli_query($conn,$sql);
                   while ($row = mysqli_fetch_array($result)) {
@@ -156,7 +160,7 @@ if(isset($_POST['update'])){
                   }
                   ?>
                   <h4 class="card-title">Edit My Profile</h4>
-                  <form action="editProfile.php" method="post" class="form-sample">
+                  <form action="editProfile.php" method="post" class="form-sample" >
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
@@ -170,7 +174,7 @@ if(isset($_POST['update'])){
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Last name</label>
                           <div class="col-sm-9">
-                          <input type="text" name="lName" id="lastName" value="<?php echo $lastName ?>" class="form-control" >
+                          <input type="text" name="lastName" id="lastName" value="<?php echo $lastName ?>" class="form-control" >
                           </div>
                         </div>
                       </div>

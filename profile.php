@@ -50,7 +50,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                     <div class="float-left">
                       <i class="mdi mdi-cube text-danger icon-lg"></i>
                     </div>
-                    <div class="float-right">
+
                       <p class="mb-0 text-right">My total savings</p>
                       <div class="fluid-container">
                         <h4 class="font-weight-medium text-right mb-0">
@@ -71,14 +71,14 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                         </h4>
                       </div>
                     </div>
-                  </div>
+
                   <p class="text-muted mt-3 mb-0">
                     <!-- <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth -->
                   </p>
                 </div>
               </div>
             </div>
-            <div class="col-9 grid-margin">
+            <div class="col-md-9 col-sm-6 grid-margin">
               <div class="card">
                 <div class="card-body">
                  <?php
@@ -91,8 +91,6 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
 
                   if ($resultCheck>0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-
-
                       $firstName = $row['firstName'];
                       $lastName = $row['lastName'];
                       $email = $row['email'];

@@ -11,6 +11,7 @@ $firstName = $row['firstName'];
 $lastName = $row['lastName'];
 $email = $row['email'];
 $admin = $row ['admin'];
+$profileImage = $row['profileImage'];
 
 }} ?>
 
@@ -20,7 +21,7 @@ $admin = $row ['admin'];
             <div class="nav-link">
               <div class="user-wrapper">
                 <div class="profile-image">
-                  <img src="images/faces/face1.jpg" alt="profile image">
+                  <img class="img-xs rounded-circle" src="uploads/<?php echo $profileImage;?>" alt="profile image">
                 </div>
                 <div class="text-wrapper">
                   <p class="profile-name"><?php echo $firstName." ".$lastName ?></p>

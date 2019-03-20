@@ -80,7 +80,7 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                      <td><?php echo $lastName ?></td>
                      <td><?php echo  $email ?></td>
                      <td><?php echo $admin ?></td>
-                     <td><input type="checkbox" name="select" value="<?php echo $userId ?>" ></td>
+                     <td><input type="checkbox" name="select[]" value="<?php echo $userId ?>" ></td>
 
 
                      </tr>
@@ -99,21 +99,20 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
             </div>
             <?php
             if(isset($_POST['changeRole'])){
-
-              if (!empty($_POST['select'])) {
-                $selected = $_POST['select'];
-
-                  $roleQuery = "UPDATE 'users SET admin ='Y' WHERE userId=$selected";
-                  $QueryResult = mysqli_query($conn, $roleQuery);
+              $role = $_POST['selectRole'];
+                  foreach ($_POST['select'] as $selected => $value) {
+                    $roleQuery = "UPDATE users SET admin =$role WHERE userId=$value";
+                    $QueryResult = mysqli_query($conn, $roleQuery);
                   if($QueryResult === FALSE){
-                      echo "Something went wrong." . mysqli_errno($conn) . ":". mysqli_error($conn);
-                  }else{
-                      echo "<h1>Changed</h1>";
+                    echo "Something went wrong." . mysqli_errno($conn) . ":". mysqli_error($conn);
+                }else{
+                    echo "<h1>Changed</h1>";
+                }
                   }
 
 
               }
-            }
+
                 ?>
             <div class="col-12 grid-margin">
               <div class="card">
@@ -126,20 +125,19 @@ if (!isset($_SESSION['fName']) || !isset($_SESSION['userID'])) {
                           <label class="col-sm-3 col-form-label">Change role</label>
                           <div class="col-sm-9">
                             <select class="form-control" name="selectRole">
-                              <option selected value="NULL">Choose...</option>
-                              <option value="admin" >Admin</option>
-                              <option value="user" >User</option>
+                              <option value="Y" >Admin</option>
+                              <option value="N" >User</option>
                             </select>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6 col-sm-6">
                         <div class="form-group row">
                           <div class="col-sm-6">
                             <button class="btn btn-success ">Change
                             <i class="mdi mdi-plus"></i>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="col-md-6 col-sm-6">
                           <a href="addNewMember.php" class="btn btn-success">Add new member</a>
                           </div>
                         </div>
