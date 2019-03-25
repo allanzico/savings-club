@@ -1,6 +1,8 @@
 <?php
 define('included',TRUE);
 if(isset($_POST['login_user'])){
+    ini_set('display_errors',1);
+    error_reporting(-1);
     require 'connection.php';
 
     $email = $_POST['email'];
