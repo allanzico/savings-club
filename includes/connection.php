@@ -6,7 +6,7 @@ if(!defined('included')){
         exit();
      }
 //Create connection to mysql server
-$conn = mysqli_connect("b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com", "mph8lqg1ds27cdod", "c3hvst4i0j2rjmr5")
+$conn = mysqli_connect("b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com", "mph8lqg1ds27cdod", "cz215wn85izz9kxh")
         OR DIE("<p>Unable to connect to the database server.</p>");
 
 // $conn = mysqli_connect("localhost", "root", "")
