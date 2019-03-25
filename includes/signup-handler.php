@@ -57,8 +57,6 @@ if(isset($_POST['submit'])){
                         mysqli_stmt_bind_param($statement, 'ssss', $firstName, $lastName , $email, $hashedPassword);
                         mysqli_stmt_execute($statement);
                         header("Location: ../register.php?error=success");
-                        //echo mysqli_info($conn);
-                        // var_dump($lastName);
                         exit();
                     }
             }

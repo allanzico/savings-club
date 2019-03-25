@@ -28,7 +28,7 @@ $Transaction = "CREATE TABLE IF NOT EXISTS transact(
 )";
 
 //Petty Cash
-$Transaction = "CREATE TABLE IF NOT EXISTS pettyCash(
+$pettyCash = "CREATE TABLE IF NOT EXISTS pettyCash(
     cashId INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     date DATE NOT NULL,
     type VARCHAR(50) ,

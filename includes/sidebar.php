@@ -20,9 +20,9 @@ $profileImage = $row['profileImage'];
           <li class="nav-item nav-profile">
             <div class="nav-link">
               <div class="user-wrapper">
-                <div class="profile-image">
+                <a href="updateImage.php" class="profile-image">
                   <img class="img-xs rounded-circle" src="uploads/<?php echo $profileImage;?>" alt="profile image">
-                </div>
+                </a>
                 <div class="text-wrapper">
                   <p class="profile-name"><?php echo $firstName." ".$lastName ?></p>
                   <div>
