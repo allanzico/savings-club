@@ -14,7 +14,7 @@ $conn = mysqli_connect("b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.co
 
 //Creating database if doesn't already exist and selecting
 //$DBName = "savings_club";
-$DBName = "zywixeao4qc32xir"
+$DBName = "zywixeao4qc32xir";
 if (!mysqli_select_db($conn, $DBName)) {
     $SQLstring = "CREATE DATABASE $DBName";
     mysqli_query($conn, $SQLstring)
