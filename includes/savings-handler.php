@@ -1,9 +1,7 @@
 <?php
 define('included',TRUE);
 if(isset($_POST['saveTransaction'])){
-
     require 'connection.php';
-
     $date = $_POST['transactionDate'];
     $amount = $_POST['amount'];
     $payeeEmail = $_POST['payeeEmail'];
